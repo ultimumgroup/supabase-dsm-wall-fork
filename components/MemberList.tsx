@@ -34,13 +34,13 @@ export default function MemberList() {
           const [postsResult, likesResult, bookmarksResult] = await Promise.all([
             supabase.from('posts').select('id').eq('user_id', member.id),
             supabase.from('posts').select('id').eq('user_id', member.id).then(async (posts) => {
-              if (!posts.data?.length) return { count: 0 };
+              if (!posts.data?.length) return { data: [], count: 0 };
               const postIds = posts.data.map(p => p.id);
               const likes = await supabase.from('likes').select('id').in('post_id', postIds);
               return likes;
             }),
             supabase.from('posts').select('id').eq('user_id', member.id).then(async (posts) => {
-              if (!posts.data?.length) return { count: 0 };
+              if (!posts.data?.length) return { data: [], count: 0 };
               const postIds = posts.data.map(p => p.id);
               const bookmarks = await supabase.from('bookmarks').select('id').in('post_id', postIds);
               return bookmarks;
@@ -50,8 +50,8 @@ export default function MemberList() {
           return {
             ...member,
             posts_count: postsResult.data?.length || 0,
-            likes_received: likesResult.data?.length || 0,
-            bookmarks_received: bookmarksResult.data?.length || 0,
+            likes_received: 'data' in likesResult ? likesResult.data?.length || 0 : 0,
+            bookmarks_received: 'data' in bookmarksResult ? bookmarksResult.data?.length || 0 : 0,
           };
         })
       );
