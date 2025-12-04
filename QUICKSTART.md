@@ -1,5 +1,7 @@
 # Quick Start Guide 🚀
 
+> **Note:** The main, most up-to-date instructions live in **[README.md](README.md)**. This is a condensed 5-minute setup guide for attendees who want to get started quickly.
+
 **For Workshop Attendees**
 
 ## 5-Minute Setup

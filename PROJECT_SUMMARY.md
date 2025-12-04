@@ -1,5 +1,7 @@
 # Project Setup Complete! 🎉
 
+> **Note:** For workshop and setup instructions, see **[README.md](README.md)**. This file summarizes what was initially created for the project.
+
 ## What Was Created
 
 A complete Next.js 15 + Supabase teaching application for the **Des Moines Supabase Meetup**.
