@@ -7,7 +7,15 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'supabase': {
+          DEFAULT: '#3ECF8E',
+          dark: '#2FB078',
+          light: '#5DDBA2',
+        },
+      },
+    },
   },
   plugins: [],
 };

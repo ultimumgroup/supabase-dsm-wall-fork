@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { clearSession, getSession } from '@/lib/session';
 import { useEffect, useState } from 'react';
@@ -31,8 +32,15 @@ export default function Navigation() {
     <nav className="bg-white shadow-sm border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="text-xl font-bold text-blue-600">
-            Supabase DSM Wall
+          <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <Image 
+              src="/images/supabase-dsm-logo.png" 
+              alt="Supabase Des Moines" 
+              width={140}
+              height={40}
+              priority
+            />
+            <div className="text-2xl font-bold text-gray-800">The Wall</div>
           </Link>
 
           {isLoggedIn && (
@@ -41,10 +49,10 @@ export default function Navigation() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-sm font-medium ${
+                  className={`text-sm font-medium transition-colors ${
                     pathname === link.href
-                      ? 'text-blue-600'
-                      : 'text-gray-700 hover:text-blue-600'
+                      ? 'text-supabase'
+                      : 'text-gray-700 hover:text-supabase'
                   }`}
                 >
                   {link.label}

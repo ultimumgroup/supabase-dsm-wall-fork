@@ -109,7 +109,7 @@ export default function ProfileForm() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-supabase"
           />
         </div>
 
@@ -122,7 +122,7 @@ export default function ProfileForm() {
             value={bio}
             onChange={(e) => setBio(e.target.value)}
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-supabase"
           />
         </div>
 
@@ -148,7 +148,7 @@ export default function ProfileForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50"
+          className="w-full bg-supabase text-white py-2 px-4 rounded-md hover:bg-supabase-dark disabled:opacity-50 transition-colors"
         >
           {loading ? 'Saving...' : 'Save Profile'}
         </button>
