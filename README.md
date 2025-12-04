@@ -39,10 +39,13 @@ Quick checklist for running the session:
 ## What This App Does
 
 - **User Authentication**: Simple username/password authentication using bcrypt
-- **Profile Management**: Users can set up profiles with avatars and bios
-- **Community Feed**: Share photos and code files with the community
+- **Profile Management**: Users can set up profiles with avatars, bios, email, and LinkedIn
+- **Community Feed**: Share photos, code files, or text posts with the community
 - **File Storage**: Upload images and code files to Supabase Storage
-- **Member Directory**: View all registered community members
+- **Likes & Bookmarks**: Like and bookmark posts, with counts displayed
+- **Filters & Sorting**: Filter by liked/bookmarked posts, sort by recent/oldest/most liked
+- **Member Directory**: View all community members with post/like/bookmark stats
+- **URL Detection**: URLs in captions are automatically clickable
 
 ## Getting Started
 
@@ -118,23 +121,47 @@ CREATE TABLE users (
   password_hash TEXT NOT NULL,
   bio TEXT,
   avatar_url TEXT,
+  email TEXT,
+  linkedin_url TEXT,
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
--- Create posts table
+-- Create posts table  
 CREATE TABLE posts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-  type TEXT NOT NULL CHECK (type IN ('photo', 'code')),
-  file_url TEXT NOT NULL,
+  type TEXT NOT NULL CHECK (type IN ('photo', 'code', 'text')),
+  file_url TEXT,
   caption TEXT,
   created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Create likes table
+CREATE TABLE likes (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+  post_id UUID REFERENCES posts(id) ON DELETE CASCADE NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  UNIQUE(user_id, post_id)
+);
+
+-- Create bookmarks table
+CREATE TABLE bookmarks (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+  post_id UUID REFERENCES posts(id) ON DELETE CASCADE NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  UNIQUE(user_id, post_id)
 );
 
 -- Create indexes for better performance
 CREATE INDEX idx_posts_user_id ON posts(user_id);
 CREATE INDEX idx_posts_created_at ON posts(created_at DESC);
 CREATE INDEX idx_users_username ON users(username);
+CREATE INDEX idx_likes_user_id ON likes(user_id);
+CREATE INDEX idx_likes_post_id ON likes(post_id);
+CREATE INDEX idx_bookmarks_user_id ON bookmarks(user_id);
+CREATE INDEX idx_bookmarks_post_id ON bookmarks(post_id);
 ```
 
 **Verify your tables were created:**
@@ -143,7 +170,12 @@ CREATE INDEX idx_users_username ON users(username);
 2. You should see two tables: `users` and `posts`
 3. Click on each one to see the column structure
 
-> **What just happened?** You created two PostgreSQL tables in your Supabase database. The `users` table stores account info (username, hashed password, bio, avatar), and the `posts` table stores the photos and code files people upload. The indexes make queries faster.
+> **What just happened?** You created four PostgreSQL tables in your Supabase database:
+> - `users`: Account info (username, password hash, bio, avatar, email, LinkedIn)
+> - `posts`: Photos, code files, or text posts (now supports text-only posts!)
+> - `likes`: Tracks which users liked which posts
+> - `bookmarks`: Tracks which users bookmarked which posts
+> The indexes make queries faster, and the UNIQUE constraints prevent duplicate likes/bookmarks.
 
 ### Step 5: Create Storage Bucket
 
@@ -218,11 +250,14 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 1. You should see "The Wall" with the Supabase Des Moines logo
 2. Create an account with any username and password
-3. After signup, you'll be prompted to set up your profile
-4. Try uploading a photo or code file
-5. Visit the Feed to see your post appear!
-6. Go back to your Supabase dashboard → **Table Editor** → `users` and you'll see your account row
-7. Check **Storage** → `public-files` to see your uploaded file
+3. After signup, set up your profile (add bio, email, LinkedIn, and photo if you want)
+4. Go to the Feed and click "+ Create Post"
+5. Try posting text, a photo, or a code file (file is now optional!)
+6. Like and bookmark posts using the heart and bookmark icons
+7. Use the filters to see "My Liked" or "My Bookmarked" posts
+8. Sort by "Most Liked" to see popular content
+9. Visit Members to see everyone's stats (posts, likes received, bookmarks)
+10. Click on a member's post count to see all their posts
 
 🎉 **Congratulations!** You've built a full-stack app with Next.js and Supabase!
 

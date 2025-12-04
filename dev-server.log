@@ -14,3 +14,21 @@
 ⚠️  Node.js 18 and below are deprecated and will no longer be supported in future versions of @supabase/supabase-js. Please upgrade to Node.js 20 or later. For more information, visit: https://github.com/orgs/supabase/discussions/37217
  GET / 200 in 5534ms
  ✓ Compiled in 304ms (322 modules)
+ ✓ Compiled in 1064ms (322 modules)
+ GET / 200 in 52ms
+ ✓ Compiled in 781ms (812 modules)
+ GET / 200 in 176ms
+ ✓ Compiled in 328ms (824 modules)
+ GET / 200 in 95ms
+ ✓ Compiled in 346ms (824 modules)
+ GET / 200 in 62ms
+⚠️  Node.js 18 and below are deprecated and will no longer be supported in future versions of @supabase/supabase-js. Please upgrade to Node.js 20 or later. For more information, visit: https://github.com/orgs/supabase/discussions/37217
+ GET / 200 in 289ms
+ ✓ Compiled in 1338ms (824 modules)
+ ✓ Compiled in 200ms (338 modules)
+ ✓ Compiled in 282ms (338 modules)
+ ✓ Compiled in 245ms (338 modules)
+ ✓ Compiled in 328ms (338 modules)
+ ✓ Compiled in 412ms (338 modules)
+ ✓ Compiled in 183ms (338 modules)
+ ✓ Compiled in 225ms (810 modules)

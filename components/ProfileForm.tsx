@@ -9,6 +9,8 @@ export default function ProfileForm() {
   const [user, setUser] = useState<User | null>(null);
   const [username, setUsername] = useState('');
   const [bio, setBio] = useState('');
+  const [email, setEmail] = useState('');
+  const [linkedinUrl, setLinkedinUrl] = useState('');
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -34,6 +36,8 @@ export default function ProfileForm() {
       setUser(data);
       setUsername(data.username);
       setBio(data.bio || '');
+      setEmail(data.email || '');
+      setLinkedinUrl(data.linkedin_url || '');
     }
   };
 
@@ -70,7 +74,13 @@ export default function ProfileForm() {
       // Update user profile
       const { error } = await supabase
         .from('users')
-        .update({ username, bio, avatar_url: avatarUrl })
+        .update({ 
+          username, 
+          bio, 
+          email: email || null,
+          linkedin_url: linkedinUrl || null,
+          avatar_url: avatarUrl 
+        })
         .eq('id', userId);
 
       if (error) throw error;
@@ -122,6 +132,34 @@ export default function ProfileForm() {
             value={bio}
             onChange={(e) => setBio(e.target.value)}
             rows={4}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-supabase"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium mb-1">
+            Email (optional)
+          </label>
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="your.email@example.com"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-supabase"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="linkedin" className="block text-sm font-medium mb-1">
+            LinkedIn URL (optional)
+          </label>
+          <input
+            id="linkedin"
+            type="url"
+            value={linkedinUrl}
+            onChange={(e) => setLinkedinUrl(e.target.value)}
+            placeholder="https://linkedin.com/in/yourprofile"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-supabase"
           />
         </div>
