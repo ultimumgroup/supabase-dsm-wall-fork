@@ -1,4 +1,4 @@
-# The Wall — Supabase Des Moines Meetup (December 4, 2025)
+# The Wall — Supabase Des Moines Meetup (December 4, 2025) - 
 
 Welcome! **The Wall** is a community application built specifically for the first Supabase Des Moines meetup. This is a tiny Next.js + Supabase app that demonstrates user accounts, profiles, a shared feed, and file uploads to Supabase Storage. It's designed to teach full-stack development patterns in a simple, hands-on way.
 
